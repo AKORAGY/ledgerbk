@@ -1,4 +1,5 @@
 const APP_CONFIG={lowStock:5,currency:"UGX"};
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', ()=>{ navigator.serviceWorker.register('./sw.js'); });
 }
