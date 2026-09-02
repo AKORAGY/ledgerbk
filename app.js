@@ -1,4 +1,8 @@
 const APP_CONFIG={lowStock:5,currency:"UGX"};
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('./sw.js'); });
+}
+
 function save(k,d){localStorage.setItem(k,JSON.stringify(d))}
 function get(k){try{return JSON.parse(localStorage.getItem(k)||"[]")}catch{return []}}
 
@@ -9,7 +13,7 @@ window.enterTransaction=function(type){
  if(!itemEl||!qtyEl) return alert("Form not found");
  let item=itemEl.value;
  let qty=parseInt(qtyEl.value);
- if(!item||!qty) return alert("Select Item & Qty");
+ if(!item||!qty) ret7urn alert("Select Item & Qty");
  let stock=get('stock');
  let p=stock.find(s=>s.name==item);
  if(!p) return alert("No stock! Add in Stock page");
