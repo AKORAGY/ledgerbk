@@ -1,0 +1,9 @@
+{
+  "name": "Duka Manager",
+  "short_name": "Duka",
+  "start_url": "./dashboard.html",
+  "display": "standalone",
+  "background_color": "#0A1931",
+  "theme_color": "#E10600",
+  "icons": [{"src": "./icon.png","sizes": "512x512","type": "image/png"}]
+}
