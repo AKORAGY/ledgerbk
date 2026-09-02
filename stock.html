@@ -24,21 +24,6 @@
 </div>
 <script src="app.js"></script>
 <script>
-// Run after app.js loads
-document.addEventListener('DOMContentLoaded', ()=>{
-  if(typeof renderStock === 'function') renderStock();
-  else if(typeof loadStock === 'function') loadStock();
-  else {
-    // fallback if app.js is missing function - render directly
-    const stock = JSON.parse(localStorage.getItem('duka_stock')||'[]');
-    const list = document.getElementById('stockList');
-    if(stock.length===0){ list.innerHTML='<tr><td colspan=3>No stock yet</td></tr>'; return; }
-    list.innerHTML = stock.map((s,i)=>`<tr><td>${s.name}</td><td>${s.qty}</td><td><button onclick="deleteStock(${i})">Del</button></td></tr>`).join('');
-    // fill select
-    const sel = document.getElementById('sItemSelect');
-    sel.innerHTML = '<option value="">-- Select existing --</option>' + stock.map(s=>`<option>${s.name}</option>`).join('');
-  }
-});
 </script>
 </body>
 </html>
