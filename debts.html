@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debts</title>
+  <link rel="stylesheet" href="style.css">
+<style>
+  .paid-row td{background:#d4edda!important;color:#155724!important;font-weight:bold}
+  .payment-box{background:#fff;color:#0A1931;padding:15px;border-radius:12px;margin-bottom:10px}
+  .balance{font-weight:800;color:#E10600} .balance.zero{color:green}
+</style>
+</head><body>
+<div class="navbar"><a href="dashboard.html">Dashboard</a><a href="transactions.html">Transactions</a><a href="debts.html" class="active">Debts</a><a href="stock.html">Stock</a></div>
+
+<div class="container" style="flex-direction:column">
+  
+  <!-- PAYMENT FORM -->
+  <div class="payment-box">
+    <h4 style="margin-bottom:8px">💰 Receive Payment</h4>
+    <label>Name (from debts)</label>
+    <select id="payName"></select>
+    <div style="margin:6px 0">Total Owed: <span id="payTotal" class="balance">UGX 0</span></div>
+    <label>Amount Paid</label>
+    <input id="payAmount" type="number" placeholder="e.g 5000">
+    <div style="margin:6px 0">Change / Balance Left: <span id="payBalance" class="balance">0</span></div>
+    <button class="full" onclick="makePayment()" style="background:green!important;width:100%">Receive Payment</button>
+  </div>
+
+  <div class="card">
+    <button onclick="filterDebts()" style="float:right;width:auto">Filter ▾</button>
+    <h4>Debt List</h4><div style="clear:both"></div>
+    <table><tr><th>Name</th><th>Item</th><th>Qty</th><th>Amount</th><th>Date</th></tr><tbody id="debtList"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody></table>
+  </div>
+</div>
+<script src="app.js"></script>
+</body></html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock</title><link rel="stylesheet" href="style.css"></head><body>
+<div class="navbar"><a href="dashboard.html">Dashboard</a><a href="transactions.html">Transactions</a><a href="debts.html">Debts</a><a href="stock.html" class="active">Stock</a></div>
+<div class="container">
+  <div class="left"><div class="card"><b>Remain stock</b><table><tr><th>Item</th><th>Qty</th></tr><tbody id="stockList"><tr><td colspan="2" id="loadingText">Loading...</td></tr></tbody></table></div></div>
+  <div class="right">
+    <h4>Enter Items</h4>
+    Item (existing) <select id="sItemSelect"><option value="">-- Select existing --</option></select>
+    Or type new item <input id="sItemName" placeholder="e.g Sugar, Soap">
+    Qty <input id="sQty" type="number" placeholder="0">
+    Unit cost <input id="sCost" type="number" placeholder="0">
+    <button onclick="updateStock()">Update</button>
+  </div>
+</div>
+<script src="app.js"></script>
+</body></html>

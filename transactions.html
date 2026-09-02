@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transactions</title>
+  <link rel="stylesheet" href="style.css"></head><body>
+<div class="navbar"><a href="dashboard.html">Dashboard</a><a href="transactions.html" class="active">Transactions</a><a href="debts.html">Debts</a><a href="stock.html">Stock</a></div>
+<div class="container">
+  <div class="left"><div class="card"><table><tr><th>Item</th><th>Qty</th><th>Unit</th><th>Amount</th><th>Date</th></tr><tbody id="transList"></tbody></table></div></div>
+  <div class="right">
+    <h4>Enter transaction</h4>
+    Item <select id="item"><option>Loading...</option></select>
+    Qty <input id="qty" type="number" placeholder="Qty">
+    <input id="debtorName" placeholder="Name for Debit">
+    <div style="display:flex; gap:5px;"><button onclick="enterTransaction('cash')">Enter - Cash</button><button onclick="enterTransaction('debit')" style="background:#E10600">Enter - Debit</button></div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body></html>

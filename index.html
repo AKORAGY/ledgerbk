@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledger Book</title>
+<style>
+  :root {
+    --dark-blue: #0A1931;
+    --white: #FFFFFF;
+    --red: #E10600;
+    --light-blue: #122e5a;
+  }
+    * {margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif;}
+  body {
+    background: var(--dark-blue);
+    color: var(--white);
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .welcome-box {
+    text-align:center;
+    width:90%;
+    max-width:380px;
+    padding:30px 20px;
+  }
+  .logo {
+    width:80px;
+    height:80px;
+    background: var(--white);
+    border-radius:50%;
+    margin:0 auto 30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--dark-blue);
+    font-size:35px;
+    font-weight:bold;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  }
+  h1 {
+    font-size:32px;
+    line-height:1.2;
+    font-weight:700;
+    margin-bottom:10px;
+    letter-spacing:0.5px;
+  }
+  h1 span { color: var(--white); opacity:0.9; font-weight:300; display:block; font-size:20px; margin-top:5px;}
+  .subtitle {
+    margin:20px 0 40px;
+    opacity:0.7;
+    font-size:14px;
+  }
+  .open-btn {
+    background: var(--white);
+    color: var(--dark-blue);
+    border:none;
+    width:100%;
+    padding:16px;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:0.2s;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  }
+  .open-btn:active { transform:scale(0.97); background:#e6e6e6;}
+  .debt-alert {
+    margin-top:25px;
+    background: rgba(225,6,0,0.15);
+    border:1px solid var(--red);
+    color: var(--red);
+    padding:8px;
+    border-radius:8px;
+    font-size:12px;
+    display:none;
+  }
+  .footer { margin-top:30px; font-size:11px; opacity:0.4; }
+</style>
+</head>
+<body>
+
+<div class="welcome-box">
+  <div class="logo">≡▢</div>
+  
+  <h1>Welcome to my <span>Ledger book</span></h1>
+  <p class="subtitle">Track credit, debts & stock easily</p>
+
+  <button class="open-btn" onclick="window.location.href='dashboard.html'">OPEN</button>
+
+  <div class="debt-alert" id="debtNotice">⚠ You have unpaid debts!</div>
+  
+  <div class="footer">ShopKeeper Pro v1.0</div>
+</div>
+
+<script>
+  // Show red alert if there are debts - using your RED color
+  let debts = JSON.parse(localStorage.getItem('debts') || "[]");
+  if(debts.length > 0){
+    document.getElementById('debtNotice').style.display = "block";
+    document.getElementById('debtNotice').innerText = `⚠ You have ${debts.length} unpaid debts - UGX ${debts.reduce((a,b)=>a+b.amount,0)}`;
+  }
+</script>
+
+</body>
+</html>
