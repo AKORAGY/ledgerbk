@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#E10600">
+<title>Organisations</title><link rel="stylesheet" href="style.css">
+<style>
+.org-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border-left:5px solid #0A1931;cursor:pointer}
+.org-card.overdue{border-left-color:red;background:#ffe6e6}
+.badge{padding:3px 8px;border-radius:10px;font-size:11px;color:#fff;display:inline-block}
+.badge.weekly{background:#E10600} .badge.monthly{background:#0A1931} .badge.paid{background:green} .badge.due{background:orange} .badge.overdue{background:red}
+.add-box{background:#fff;padding:15px;border-radius:12px;margin-bottom:15px}
+</style></head><body>
+<div class="navbar">
+<a href="dashboard.html">Dashboard</a><a href="transactions.html">Transactions</a>
+<a href="debts.html">Debts</a><a href="orgs.html" class="active">Orgs</a><a href="stock.html">Stock</a>
+</div>
+<div class="container" style="flex-direction:column">
+  <div class="add-box">
+    <h4>🏢 Add Organisation</h4>
+    <label>Org Name</label><input id="orgName" placeholder="e.g Kawempe SS">
+    <label>Contact</label><input id="orgContact" placeholder="0700...">
+    <label>Payment Term</label><select id="orgTerm"><option value="weekly">Weekly</option><option value="monthly">Monthly</option></select>
+    <label>Opening Balance</label><input id="orgOpening" type="number" placeholder="0">
+    <button class="full" onclick="addOrganisation()" style="background:#0A1931!important;width:100%;margin-top:8px">Save Organisation</button>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between"><h4>Organisations</h4>
+    <select id="orgFilter" onchange="loadOrgs()"><option value="all">All</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="due">With Balance</option></select></div>
+    <div id="orgsList" style="margin-top:10px"></div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>loadOrgs());</script>
+</body></html>
