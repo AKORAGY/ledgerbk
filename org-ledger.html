@@ -1,0 +1,57 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#E10600">
+<title>Org Ledger</title><link rel="stylesheet" href="style.css">
+<style>
+.top-card{background:#0A1931;color:#fff;padding:16px;border-radius:12px;margin-bottom:12px}
+.top-card b{color:#FFD700} .bal{font-size:22px;font-weight:900}
+.payment-box{background:#fff;padding:15px;border-radius:12px;margin-bottom:10px}
+.table-box{background:#fff;padding:12px;border-radius:12px;margin-bottom:12px;overflow-x:auto}
+.paid{color:green;font-weight:bold} .due{color:#E10600;font-weight:bold}
+</style></head><body>
+<div class="navbar"><a href="dashboard.html">Dashboard</a><a href="transactions.html">Transactions</a><a href="debts.html">Debts</a><a href="orgs.html" class="active">Orgs</a><a href="stock.html">Stock</a></div>
+<div class="container" style="flex-direction:column">
+  <button onclick="window.location='orgs.html'" style="width:auto;background:#eee;color:#333;margin-bottom:8px">← Back to Orgs</button>
+  
+  <div class="top-card">
+    <h3 id="orgTitle">Loading...</h3>
+    <div id="orgMeta" style="font-size:13px;opacity:0.9"></div>
+    <div style="margin-top:10px;display:flex;gap:15px;flex-wrap:wrap">
+      <div>Total Purchases: <b id="orgTotalPurch">UGX 0</b></div>
+      <div>Total Paid: <b id="orgTotalPaid">UGX 0</b></div>
+    </div>
+    <div style="margin-top:12px">Balance: <span class="bal" id="orgBalance">UGX 0</span> <span id="orgStatus" class="badge"></span></div>
+    <div style="font-size:11px;margin-top:6px;opacity:0.7">* Overdue = Weekly >7 days, Monthly >30 days since last purchase</div>
+  </div>
+
+  <div class="payment-box">
+    <h4>➕ Add Record</h4>
+    <div style="display:flex;gap:5px;margin-top:8px">
+      <button onclick="toggleOrgForm('purchase')" style="flex:1;background:#0A1931">Add Purchase (Goods)</button>
+      <button onclick="toggleOrgForm('payment')" style="flex:1;background:green">Add Payment</button>
+    </div>
+    <div id="orgPurchaseForm" style="display:none;margin-top:12px;border-top:1px solid #eee;padding-top:10px">
+      <label>Item / Description</label><input id="orgItem" placeholder="e.g 20 bags cement, 5 cartons">
+      <label>Amount (UGX)</label><input id="orgAmount" type="number" placeholder="e.g 500000">
+      <label>Date</label><input id="orgDate" type="date">
+      <button onclick="addOrgPurchase()" style="width:100%;background:#0A1931;margin-top:5px">Save Purchase</button>
+    </div>
+    <div id="orgPaymentForm" style="display:none;margin-top:12px;border-top:1px solid #eee;padding-top:10px">
+      <label>Amount Paid</label><input id="orgPayAmount" type="number" placeholder="e.g 100000">
+      <label>Payment Method</label><select id="orgPayMethod"><option>Cash</option><option>Mobile Money</option><option>Bank</option></select>
+      <label>Date</label><input id="orgPayDate" type="date">
+      <button onclick="addOrgPayment()" style="width:100%;background:green;margin-top:5px">Save Payment</button>
+    </div>
+  </div>
+
+  <div class="table-box">
+    <h4>📦 Purchase History</h4>
+    <table><tr><th>Date</th><th>Item</th><th>Amount</th></tr><tbody id="orgPurchList"><tr><td colspan=3>Loading...</td></tr></tbody></table>
+  </div>
+  <div class="table-box">
+    <h4>💰 Payment History</h4>
+    <table><tr><th>Date</th><th>Amount</th><th>Method</th></tr><tbody id="orgPayList"><tr><td colspan=3>Loading...</td></tr></tbody></table>
+  </div>
+  <button onclick="printOrgStatement()" style="background:#333;width:100%;padding:12px">Print / Share Statement</button>
+</div>
+<script src="app.js"></script>
+</body></html>
