@@ -18,6 +18,33 @@
     flex:1;
     min-width:0;
 }
+.dashboard-grid{ display:grid;
+                    grid-template-columns:repeat(3,1fr);
+                    gap:10px; margin-bottom:10px;
+                   } 
+.stat-card{ background:#fff;
+               color:#0A1931
+               ; padding:15px;
+               border-radius:12px;
+               box-shadow:0 1px 3px #0002;
+              } 
+.stat-card small{ 
+        display:block;
+        color:#666; 
+        margin-bottom:5px; 
+            } 
+.stat-card b{
+        font-size:20px;
+           } 
+    .stat-card.red b{
+        color:#E10600;
+    } 
+.stat-card.green b{ 
+        color:green; 
+    } 
+ .stat-card.blue b{
+        color:#0A1931;
+    }
 
 .right{
     width:320px;
@@ -277,7 +304,7 @@ UGX 0
 
 </div>
 
-
+</div>
 
 <!-- =====================================================
      MAIN DASHBOARD
