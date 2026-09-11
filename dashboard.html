@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html>
 
@@ -15,155 +14,150 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-
-.dashboard-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-bottom:10px;
-}
-
-.stat-card{
-    background:#fff;
-    color:#0A1931;
-    padding:15px;
-    border-radius:12px;
-    box-shadow:0 1px 3px #0002;
-}
-
-.stat-card small{
-    display:block;
-    color:#666;
-    margin-bottom:5px;
-}
-
-.stat-card b{
-    font-size:20px;
-}
-
-.stat-card.red b{
-    color:#E10600;
-}
-
-.stat-card.green b{
-    color:green;
-}
-
-.stat-card.blue b{
-    color:#0A1931;
-}
-
-.dashboard-layout{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.dashboard-main{
+.main-content{
     flex:1;
-    min-width:280px;
+    min-width:0;
 }
 
-.dashboard-side{
+.right{
     width:320px;
-    max-width:100%;
 }
 
-.notice{
-    margin-top:10px;
-}
-
-.transaction-toolbar{
+.section-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:10px;
+    margin-bottom:15px;
 }
 
-.transaction-toolbar select{
+.section-header select{
     width:auto;
     min-width:130px;
     margin:0;
 }
 
-.transaction-table{
+.table-wrapper{
+    width:100%;
     overflow-x:auto;
 }
 
-tr.debt-row td{
-    background:#ffe5e7 !important;
-    color:#c40000 !important;
+.table-wrapper table{
+    min-width:700px;
+}
+
+.stock-notices{
+    margin-top:10px;
+}
+
+.enter-transaction{
+    margin-top:10px;
+}
+
+.enter-transaction h3{
+    margin-bottom:10px;
+}
+
+.enter-transaction label{
+    display:block;
+    margin-top:8px;
+    font-weight:bold;
+}
+
+.transaction-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.transaction-buttons button{
+    flex:1;
+    width:auto;
+}
+
+.right .card a{
+    display:block;
+    margin-top:12px;
+    color:#5b21b6;
+}
+
+tr.cash-row td{
+    background:#fff;
+    color:#333;
+}
+
+tr.debt-row td,
+tr.org-debt-row td{
+    background:#ffe5e7;
+    color:#c00;
     font-weight:bold;
 }
 
 tr.payment-row td{
-    background:#d4edda !important;
-    color:#155724 !important;
+    background:#d9f3df;
+    color:#087a19;
     font-weight:bold;
 }
 
 .type-badge{
-    padding:4px 7px;
-    border-radius:8px;
-    font-size:10px;
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:12px;
+    font-size:11px;
     font-weight:bold;
-    white-space:nowrap;
 }
 
-.type-cash{
+.badge-cash{
     background:#eee;
     color:#333;
 }
 
-.type-debt{
-    background:#E10600;
+.badge-debt,
+.badge-org-debt{
+    background:#e10600;
     color:white;
 }
 
-.type-payment{
-    background:green;
+.badge-payment{
+    background:#008c18;
     color:white;
-}
-
-.entry-buttons{
-    display:flex;
-    gap:6px;
-}
-
-.entry-buttons button{
-    flex:1;
 }
 
 @media(max-width:900px){
 
-    .dashboard-grid{
-        grid-template-columns:repeat(2,1fr);
+    .container{
+        flex-direction:column;
+    }
+
+    .main-content{
+        width:100%;
+    }
+
+    .right{
+        width:100%;
     }
 
 }
 
 @media(max-width:700px){
 
-    .dashboard-grid{
-        grid-template-columns:1fr 1fr;
+    .section-header{
+        flex-direction:column;
+        align-items:stretch;
     }
 
-    .dashboard-side{
+    .section-header select{
         width:100%;
     }
 
-}
-
-@media(max-width:450px){
-
-    .dashboard-grid{
-        grid-template-columns:1fr;
+    .transaction-buttons{
+        flex-direction:column;
     }
 
+    .transaction-buttons button{
+        width:100%;
+    }
 }
-
 </style>
 
 </head>
@@ -832,25 +826,3 @@ document.addEventListener(
 
 </body>
 </html>
-```
-
-### One small correction to `org-ledger.html`
-
-Because the new organisation purchase system uses a **stock dropdown + quantity**, the purchase-history heading should also have four columns:
-
-```html
-<tr>
-    <th>Date</th>
-    <th>Item</th>
-    <th>Qty</th>
-    <th>Amount</th>
-</tr>
-```
-
-The new dashboard will then work from the same central `transactions` collection.
-
-Your original app already saves normal transactions in `transactions`, including the item, quantity, unit price, amount, date and transaction type. The updated dashboard simply uses those records to calculate the summaries rather than maintaining another separate sales system.
-
-**Important:** if you use the `app.js` I gave in the previous message, use this Dashboard with it. Don't mix the old and new `app.js` versions, because the new dashboard depends on functions such as `todayISO()`, `dateOnly()`, `getOrgs()`, and `getOrgTrans()`.
-
-I can also generate a **visual dashboard mockup** showing exactly how this new shop dashboard could look—**modern professional, simple POS, or mobile-first**?
