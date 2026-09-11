@@ -1,35 +1,971 @@
+```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#E10600">
+
+<meta name="theme-color" content="#E10600">
+
 <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.stat-card{
+    background:#fff;
+    color:#0A1931;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 1px 3px #0002;
+}
+
+.stat-card small{
+    display:block;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.stat-card b{
+    font-size:20px;
+}
+
+.stat-card.red b{
+    color:#E10600;
+}
+
+.stat-card.green b{
+    color:green;
+}
+
+.stat-card.blue b{
+    color:#0A1931;
+}
+
+.dashboard-layout{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.dashboard-main{
+    flex:1;
+    min-width:280px;
+}
+
+.dashboard-side{
+    width:320px;
+    max-width:100%;
+}
+
+.notice{
+    margin-top:10px;
+}
+
+.transaction-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+}
+
+.transaction-toolbar select{
+    width:auto;
+    min-width:130px;
+    margin:0;
+}
+
+.transaction-table{
+    overflow-x:auto;
+}
+
+tr.debt-row td{
+    background:#ffe5e7 !important;
+    color:#c40000 !important;
+    font-weight:bold;
+}
+
+tr.payment-row td{
+    background:#d4edda !important;
+    color:#155724 !important;
+    font-weight:bold;
+}
+
+.type-badge{
+    padding:4px 7px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.type-cash{
+    background:#eee;
+    color:#333;
+}
+
+.type-debt{
+    background:#E10600;
+    color:white;
+}
+
+.type-payment{
+    background:green;
+    color:white;
+}
+
+.entry-buttons{
+    display:flex;
+    gap:6px;
+}
+
+.entry-buttons button{
+    flex:1;
+}
+
+@media(max-width:900px){
+
+    .dashboard-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .dashboard-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .dashboard-side{
+        width:100%;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVIGATION -->
+
 <div class="navbar">
-  <a href="dashboard.html" class="active">Dashboard</a>
-  <a href="transactions.html">Transactions</a>
-  <a href="debts.html">Debts</a>
-  <a href="orgs.html">Orgs</a>
-  <a href="stock.html">Stock</a>
+
+<a href="dashboard.html" class="active">
+Dashboard
+</a>
+
+<a href="transactions.html">
+Transactions
+</a>
+
+<a href="debts.html">
+Debts
+</a>
+
+<a href="orgs.html">
+Orgs
+</a>
+
+<a href="stock.html">
+Stock
+</a>
+
 </div>
-<div class="container">
-  <div class="left">
-    <div class="card">No. transactions <b id="tCount">0</b> <select id="filterDate"><option>Today</option><option>All</option></select></div>
-    <div class="card">Today amount <b id="tAmount">UGX 0</b></div>
-    <div class="card">Orgs Total Due <b id="orgSummary">UGX 0</b> <a href="orgs.html" style="float:right;font-size:12px">View Orgs →</a></div>
-    <div class="card notice"><b>Notices</b><div id="notices">Loading...</div></div>
-  </div>
-  <div class="right">
-    <h4>Enter transaction</h4>
-    Item <select id="item"></select>
-    Qty <input id="qty" type="number">
-    Customer (if debit) <input id="debtorName" placeholder="Name if debit">
-    <div style="display:flex;gap:5px"><button onclick="enterTransaction('cash')">Cash</button><button class="red" onclick="enterTransaction('debit')">Debit</button></div>
-  </div>
+
+
+
+<div class="container" style="display:block;">
+
+
+<!-- =====================================================
+     SUMMARY CARDS
+===================================================== -->
+
+<div class="dashboard-grid">
+
+
+<div class="stat-card blue">
+
+<small>Total Transactions</small>
+
+<b id="tCount">
+0
+</b>
+
 </div>
+
+
+
+<div class="stat-card blue">
+
+<small>Today's Sales</small>
+
+<b id="todaySales">
+UGX 0
+</b>
+
+</div>
+
+
+
+<div class="stat-card green">
+
+<small>Cash Sales</small>
+
+<b id="cashSales">
+UGX 0
+</b>
+
+</div>
+
+
+
+<div class="stat-card red">
+
+<small>Outstanding Customer Debt</small>
+
+<b id="customerDebt">
+UGX 0
+</b>
+
+</div>
+
+
+
+<div class="stat-card green">
+
+<small>Debt Payments</small>
+
+<b id="debtPayments">
+UGX 0
+</b>
+
+</div>
+
+
+
+<div class="stat-card red">
+
+<small>Organisation Balance</small>
+
+<b id="orgSummary">
+UGX 0
+</b>
+
+</div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN DASHBOARD
+===================================================== -->
+
+<div class="dashboard-layout">
+
+
+<!-- LEFT -->
+
+<div class="dashboard-main">
+
+
+<div class="card">
+
+<div class="transaction-toolbar">
+
+<h4>
+Recent Transactions
+</h4>
+
+
+<select
+id="dashboardDateFilter"
+onchange="loadDashboardTransactions()"
+>
+
+<option value="today">
+Today
+</option>
+
+<option value="yesterday">
+Yesterday
+</option>
+
+<option value="all">
+All
+</option>
+
+</select>
+
+</div>
+
+
+
+<div class="transaction-table">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Item</th>
+
+<th>Qty</th>
+
+<th>Amount</th>
+
+<th>Type</th>
+
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="dashboardTransactions">
+
+<tr>
+
+<td
+colspan="6"
+class="loading"
+>
+Loading...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<!-- LOW STOCK -->
+
+<div class="card notice">
+
+<b>
+⚠️ Stock Notices
+</b>
+
+<div
+id="notices"
+style="margin-top:8px"
+>
+Loading...
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- RIGHT -->
+
+<div class="dashboard-side">
+
+
+<div class="right"
+style="width:100%;max-width:100%;">
+
+<h4>
+Enter Transaction
+</h4>
+
+
+<label>
+Item
+</label>
+
+<select id="item">
+
+<option>
+Loading...
+</option>
+
+</select>
+
+
+<label>
+Quantity
+</label>
+
+<input
+id="qty"
+type="number"
+min="1"
+placeholder="Quantity"
+>
+
+
+<label>
+Customer Name
+</label>
+
+<input
+id="debtorName"
+placeholder="Name if debit"
+>
+
+
+<div class="entry-buttons">
+
+<button
+onclick="enterTransaction('cash')"
+>
+Cash
+</button>
+
+
+<button
+class="red"
+onclick="enterTransaction('debit')"
+>
+Debit
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="card" style="margin-top:10px">
+
+<h4>
+Quick Links
+</h4>
+
+<a
+href="transactions.html"
+style="display:block;margin-top:10px"
+>
+📋 View All Transactions →
+</a>
+
+
+<a
+href="debts.html"
+style="display:block;margin-top:10px"
+>
+💰 Manage Debts →
+</a>
+
+
+<a
+href="orgs.html"
+style="display:block;margin-top:10px"
+>
+🏢 Organisations →
+</a>
+
+
+<a
+href="stock.html"
+style="display:block;margin-top:10px"
+>
+📦 Manage Stock →
+</a>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
 <script src="app.js"></script>
+
+
+<script>
+
+/* =====================================================
+   DASHBOARD DATA
+===================================================== */
+
+function loadDashboard(){
+
+    const transactions =
+        get("transactions");
+
+    const debts =
+        get("debts");
+
+    const orgs =
+        getOrgs();
+
+    const orgTrans =
+        getOrgTrans();
+
+
+    /* TOTAL TRANSACTIONS */
+
+    const count =
+        document.getElementById("tCount");
+
+    if(count){
+
+        count.innerText =
+            transactions.length;
+
+    }
+
+
+    /* TODAY */
+
+    const today =
+        todayISO();
+
+
+    const todayTransactions =
+        transactions.filter(
+            t => dateOnly(t.date) === today
+        );
+
+
+    /* TODAY SALES */
+
+    const todaySales =
+        todayTransactions
+        .filter(
+            t =>
+                t.type === "cash" ||
+                t.type === "debt" ||
+                t.type === "org_debt"
+        )
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount || 0),
+            0
+        );
+
+
+    document.getElementById(
+        "todaySales"
+    ).innerText =
+        "UGX " +
+        todaySales.toLocaleString();
+
+
+    /* CASH SALES */
+
+    const cash =
+        transactions
+        .filter(
+            t => t.type === "cash"
+        )
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount || 0),
+            0
+        );
+
+
+    document.getElementById(
+        "cashSales"
+    ).innerText =
+        "UGX " +
+        cash.toLocaleString();
+
+
+    /* CUSTOMER DEBT */
+
+    const customerDebt =
+        debts
+        .reduce(
+            (sum,d) =>
+                sum +
+                Math.max(
+                    Number(d.amount || 0),
+                    0
+                ),
+            0
+        );
+
+
+    document.getElementById(
+        "customerDebt"
+    ).innerText =
+        "UGX " +
+        customerDebt.toLocaleString();
+
+
+    /* DEBT PAYMENTS */
+
+    const debtPayments =
+        transactions
+        .filter(
+            t =>
+                t.type === "debt_payment" ||
+                t.type === "org_payment"
+        )
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount || 0),
+            0
+        );
+
+
+    document.getElementById(
+        "debtPayments"
+    ).innerText =
+        "UGX " +
+        debtPayments.toLocaleString();
+
+
+    /* ORGANISATION BALANCE */
+
+    const orgPurchases =
+        orgTrans
+        .filter(
+            t => t.type === "purchase"
+        )
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount || 0),
+            0
+        );
+
+
+    const orgPayments =
+        orgTrans
+        .filter(
+            t => t.type === "payment"
+        )
+        .reduce(
+            (sum,t) =>
+                sum + Number(t.amount || 0),
+            0
+        );
+
+
+    const orgBalance =
+        orgPurchases -
+        orgPayments;
+
+
+    document.getElementById(
+        "orgSummary"
+    ).innerText =
+        "UGX " +
+        orgBalance.toLocaleString();
+
+
+    /* LOW STOCK */
+
+    const stock =
+        get("stock");
+
+
+    const low =
+        stock.filter(
+            s =>
+                Number(s.qty) <=
+                Number(APP_CONFIG.lowStock)
+        );
+
+
+    const notices =
+        document.getElementById(
+            "notices"
+        );
+
+
+    if(notices){
+
+        notices.innerHTML =
+            low.length
+
+                ? low.map(
+                    s =>
+                        `⚠️ ${s.name}
+                         (${s.qty} remaining)`
+                  ).join("<br>")
+
+                : "✅ All stock levels are good.";
+
+    }
+
+
+    loadDashboardTransactions();
+
+}
+
+
+
+/* =====================================================
+   DASHBOARD TRANSACTION FILTER
+===================================================== */
+
+window.loadDashboardTransactions =
+function(){
+
+    const tbody =
+        document.getElementById(
+            "dashboardTransactions"
+        );
+
+
+    if(!tbody) return;
+
+
+    const filter =
+        document.getElementById(
+            "dashboardDateFilter"
+        )?.value ||
+        "today";
+
+
+    let transactions =
+        get("transactions");
+
+
+    const today =
+        todayISO();
+
+
+    const yesterdayDate =
+        new Date();
+
+
+    yesterdayDate.setDate(
+        yesterdayDate.getDate() - 1
+    );
+
+
+    const yesterday =
+        yesterdayDate
+        .toISOString()
+        .split("T")[0];
+
+
+    if(filter === "today"){
+
+        transactions =
+            transactions.filter(
+                t =>
+                    dateOnly(t.date) ===
+                    today
+            );
+
+    }
+
+
+    if(filter === "yesterday"){
+
+        transactions =
+            transactions.filter(
+                t =>
+                    dateOnly(t.date) ===
+                    yesterday
+            );
+
+    }
+
+
+    if(!transactions.length){
+
+        tbody.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="6"
+                style="
+                text-align:center;
+                padding:20px;
+                "
+            >
+                No transactions found
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        transactions
+        .slice()
+        .reverse()
+        .slice(0,20)
+        .map(t => {
+
+
+            let rowClass =
+                "cash-row";
+
+
+            let typeText =
+                "CASH";
+
+
+            let badgeClass =
+                "type-cash";
+
+
+            if(
+                t.type === "debt" ||
+                t.type === "org_debt"
+            ){
+
+                rowClass =
+                    "debt-row";
+
+                typeText =
+                    "DEBT";
+
+                badgeClass =
+                    "type-debt";
+
+            }
+
+
+            if(
+                t.type === "debt_payment" ||
+                t.type === "org_payment"
+            ){
+
+                rowClass =
+                    "payment-row";
+
+                typeText =
+                    "DEBT PAYMENT";
+
+                badgeClass =
+                    "type-payment";
+
+            }
+
+
+            return `
+
+            <tr class="${rowClass}">
+
+                <td>
+                    ${t.name || "-"}
+                </td>
+
+                <td>
+                    ${t.item || "-"}
+                </td>
+
+                <td>
+                    ${t.qty || "-"}
+                </td>
+
+                <td>
+                    UGX
+                    ${Number(t.amount || 0)
+                        .toLocaleString()}
+                </td>
+
+                <td>
+
+                    <span
+                        class="type-badge
+                        ${badgeClass}"
+                    >
+
+                        ${typeText}
+
+                    </span>
+
+                </td>
+
+                <td>
+                    ${formatDate(t.date)}
+                </td>
+
+            </tr>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =====================================================
+   START DASHBOARD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadDashboard
+);
+
+</script>
+
 </body>
 </html>
+```
+
+### One small correction to `org-ledger.html`
+
+Because the new organisation purchase system uses a **stock dropdown + quantity**, the purchase-history heading should also have four columns:
+
+```html
+<tr>
+    <th>Date</th>
+    <th>Item</th>
+    <th>Qty</th>
+    <th>Amount</th>
+</tr>
+```
+
+The new dashboard will then work from the same central `transactions` collection.
+
+Your original app already saves normal transactions in `transactions`, including the item, quantity, unit price, amount, date and transaction type. The updated dashboard simply uses those records to calculate the summaries rather than maintaining another separate sales system.
+
+**Important:** if you use the `app.js` I gave in the previous message, use this Dashboard with it. Don't mix the old and new `app.js` versions, because the new dashboard depends on functions such as `todayISO()`, `dateOnly()`, `getOrgs()`, and `getOrgTrans()`.
+
+I can also generate a **visual dashboard mockup** showing exactly how this new shop dashboard could look—**modern professional, simple POS, or mobile-first**?
