@@ -289,225 +289,110 @@ UGX 0
      MAIN DASHBOARD
 ===================================================== -->
 
-<div class="dashboard-layout">
+<div class="container">
+
+    <!-- DASHBOARD LEFT / MAIN -->
+    <div class="main-content">
+
+        <!-- RECENT TRANSACTIONS -->
+        <div class="card">
+            <div class="section-header">
+                <h3>Recent Transactions</h3>
+
+                <select id="dashboardDateFilter" onchange="loadDashboardTransactions()">
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="all">All</option>
+                </select>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="dashboardTransactionTable">
+                        <tr>
+                            <td colspan="6" class="loading">
+                                Loading transactions...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- STOCK NOTICES -->
+        <div class="card stock-notices">
+            <h3>⚠️ Stock Notices</h3>
+            <div id="notices">
+                Loading...
+            </div>
+        </div>
+
+
+        <!-- ENTER TRANSACTION - NOW BELOW STOCK NOTICES -->
+        <div class="card enter-transaction">
+
+            <h3>Enter Transaction</h3>
+
+            <label>Item</label>
+            <select id="item">
+                <option value="">Select item</option>
+            </select>
+
+            <label>Quantity</label>
+            <input
+                id="qty"
+                type="number"
+                min="1"
+                placeholder="Enter quantity"
+            >
+
+            <label>Customer Name</label>
+            <input
+                id="debtorName"
+                type="text"
+                placeholder="Name if debit"
+            >
+
+            <div class="transaction-buttons">
+                <button onclick="enterTransaction('cash')">
+                    Cash
+                </button>
+
+                <button class="red" onclick="enterTransaction('debit')">
+                    Debit
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="right">
+
+        <div class="card">
+            <h3>Quick Links</h3>
+
+            <a href="transactions.html">📋 View All Transactions →</a>
+            <a href="debts.html">💰 Manage Debts →</a>
+            <a href="orgs.html">🏢 Organisations →</a>
+            <a href="stock.html">📦 Manage Stock →</a>
+        </div>
 
-
-<!-- LEFT -->
-
-<div class="dashboard-main">
-
-
-<div class="card">
-
-<div class="transaction-toolbar">
-
-<h4>
-Recent Transactions
-</h4>
-
-
-<select
-id="dashboardDateFilter"
-onchange="loadDashboardTransactions()"
->
-
-<option value="today">
-Today
-</option>
-
-<option value="yesterday">
-Yesterday
-</option>
-
-<option value="all">
-All
-</option>
-
-</select>
-
-</div>
-
-
-
-<div class="transaction-table">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Name</th>
-
-<th>Item</th>
-
-<th>Qty</th>
-
-<th>Amount</th>
-
-<th>Type</th>
-
-<th>Date</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="dashboardTransactions">
-
-<tr>
-
-<td
-colspan="6"
-class="loading"
->
-Loading...
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-
-<!-- LOW STOCK -->
-
-<div class="card notice">
-
-<b>
-⚠️ Stock Notices
-</b>
-
-<div
-id="notices"
-style="margin-top:8px"
->
-Loading...
-</div>
-
-</div>
-
-
-</div>
-
-
-
-<!-- RIGHT -->
-
-<div class="dashboard-side">
-
-
-<div class="right"
-style="width:100%;max-width:100%;">
-
-<h4>
-Enter Transaction
-</h4>
-
-
-<label>
-Item
-</label>
-
-<select id="item">
-
-<option>
-Loading...
-</option>
-
-</select>
-
-
-<label>
-Quantity
-</label>
-
-<input
-id="qty"
-type="number"
-min="1"
-placeholder="Quantity"
->
-
-
-<label>
-Customer Name
-</label>
-
-<input
-id="debtorName"
-placeholder="Name if debit"
->
-
-
-<div class="entry-buttons">
-
-<button
-onclick="enterTransaction('cash')"
->
-Cash
-</button>
-
-
-<button
-class="red"
-onclick="enterTransaction('debit')"
->
-Debit
-</button>
-
-</div>
-
-</div>
-
-
-
-<div class="card" style="margin-top:10px">
-
-<h4>
-Quick Links
-</h4>
-
-<a
-href="transactions.html"
-style="display:block;margin-top:10px"
->
-📋 View All Transactions →
-</a>
-
-
-<a
-href="debts.html"
-style="display:block;margin-top:10px"
->
-💰 Manage Debts →
-</a>
-
-
-<a
-href="orgs.html"
-style="display:block;margin-top:10px"
->
-🏢 Organisations →
-</a>
-
-
-<a
-href="stock.html"
-style="display:block;margin-top:10px"
->
-📦 Manage Stock →
-</a>
-
-</div>
-
+    </div>
 
 </div>
 
