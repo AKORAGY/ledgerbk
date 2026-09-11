@@ -159,6 +159,41 @@ onchange="filterTransactions()"
 
 </div>
 
+    <!-- ENTER TRANSACTION - NOW BELOW STOCK NOTICES -->
+        <div class="card enter-transaction">
+
+            <h3>Enter Transaction</h3>
+
+            <label>Item</label>
+            <select id="item">
+                <option value="">Select item</option>
+            </select>
+
+            <label>Quantity</label>
+            <input
+                id="qty"
+                type="number"
+                min="1"
+                placeholder="Enter quantity"
+            >
+
+            <label>Customer Name</label>
+            <input
+                id="debtorName"
+                type="text"
+                placeholder="Name if debit"
+            >
+
+            <div class="transaction-buttons">
+                <button onclick="enterTransaction('cash')">
+                    Cash
+                </button>
+
+                <button class="red" onclick="enterTransaction('debit')">
+                    Debit
+                </button>
+            </div>
+
 </div>
 
 <script src="app.js"></script>
