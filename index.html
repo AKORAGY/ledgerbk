@@ -100,14 +100,6 @@
   <div class="footer">ShopKeeper Pro v5.0</div>
 </div>
 
-<script>
-  // Show red alert if there are debts - using your RED color
-  let debts = JSON.parse(localStorage.getItem('debts') || "[]");
-  if(debts.length > 0){
-    document.getElementById('debtNotice').style.display = "block";
-    document.getElementById('debtNotice').innerText = `⚠ You have ${debts.length} unpaid debts - UGX ${debts.reduce((a,b)=>a+b.amount,0)}`;
-  }
-</script>
 
 </body>
 </html>
