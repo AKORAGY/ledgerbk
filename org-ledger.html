@@ -10,7 +10,27 @@
 </style></head><body>
 <div class="navbar"><a href="dashboard.html">Dashboard</a><a href="transactions.html">Transactions</a><a href="debts.html">Debts</a><a href="orgs.html" class="active">Orgs</a><a href="stock.html">Stock</a></div>
 <div class="container" style="flex-direction:column">
-  <button onclick="window.location='orgs.html'" style="width:auto;background:#eee;color:#333;margin-bottom:8px">← Back to Orgs</button>
+  <button 
+    onclick="window.location='orgs.html'" 
+   style="
+background:#E10600;
+width:100%;
+margin-bottom:10px;
+">
+    ← Back to Org
+    s</button>
+
+  <button
+onclick="deleteOrganisation()"
+style="
+background:#E10600;
+width:100%;
+margin-bottom:10px;
+"
+>
+🗑 Delete Organisation
+</button>
+
   
   <div class="top-card">
     <h3 id="orgTitle">Loading...</h3>
@@ -30,10 +50,35 @@
       <button onclick="toggleOrgForm('payment')" style="flex:1;background:green">Add Payment</button>
     </div>
     <div id="orgPurchaseForm" style="display:none;margin-top:12px;border-top:1px solid #eee;padding-top:10px">
-      <label>Item / Description</label><input id="orgItem" placeholder="e.g 20 bags cement, 5 cartons">
-      <label>Amount (UGX)</label><input id="orgAmount" type="number" placeholder="e.g 500000">
-      <label>Date</label><input id="orgDate" type="date">
-      <button onclick="addOrgPurchase()" style="width:100%;background:#0A1931;margin-top:5px">Save Purchase</button>
+     <label>Item / Description</label>
+<label>Item</label>
+
+<select id="orgItem">
+<option value="">Loading items...</option>
+</select>
+
+<label>Quantity</label>
+
+<input
+id="orgQty"
+type="number"
+min="1"
+placeholder="Enter quantity"
+>
+
+<label>Date</label>
+
+<input
+id="orgDate"
+type="date"
+>
+
+<button
+onclick="addOrgPurchase()"
+style="width:100%;background:#0A1931;margin-top:5px"
+>
+Save Purchase
+</button>
     </div>
     <div id="orgPaymentForm" style="display:none;margin-top:12px;border-top:1px solid #eee;padding-top:10px">
       <label>Amount Paid</label><input id="orgPayAmount" type="number" placeholder="e.g 100000">
